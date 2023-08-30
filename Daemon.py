@@ -1,24 +1,34 @@
 import pyautogui
 import sys
-from PIL import Image
+from PIL import Image, ImageFilter
+
+
+import matplotlib.pyplot as plt
 
 
 
 def getCandy(color):
-    color = color - 11
 
-    x,y = color%6,int(color/6)
+    r,g,b = color
 
-    if (y == 0 and x in range(1,5)):
-        return("R")
-    elif (y == 12 and x in range(1,5)):
-        return("P")
-    elif (y == 12 and x in range(1,5)):
-        return("P")
+    if (r > 200 and g < 10 and b < 10):
+        return "R"
+    if (r in range(20,60) and g in range(140,200) and b > 240):
+        return "B"
+    if (r > 250 and g in range(220, 250) and b < 30):
+        return "Y"
+    if (r > 250 and g in range(130, 160) and b < 50):
+        return "O"    
+    if (r in range(180, 210) and g in range(30, 50) and b > 250):
+        return "P"  
+    if (r in range(40, 100) and g in range(70, 210) and b < 50):
+        return "G"  
+    return color
 
-def reduce_color_palette(image, colors=256):
-    reduced_image = image.convert("P", palette="P", colors=colors)
-    return reduced_image
+def reduce_color_palette(image):
+    converted_image = image.filter(ImageFilter.MinFilter(1))
+    # converted_image.show()
+    return converted_image
 
 def codifyBoard(image):
 
@@ -37,11 +47,12 @@ def codifyBoard(image):
 
             pixel_color = image.getpixel((x, y))
             # print(pixel_color)
-            color_row.append(pixel_color)
+            color_row.append(getCandy(pixel_color))
 
 
         color_matrix.append(color_row)
 
+    color_matrix[0][3] = getCandy(image.getpixel((45, 5)))
     return color_matrix
 
 def count_unique_elements(matrix):
@@ -57,8 +68,10 @@ while True:
     screenshot = pyautogui.screenshot()
     if ((screenshot.getpixel((30, 40))) == (226, 225, 233)):
         screenshot = screenshot.resize((256, 144))
-        screenshot = reduce_color_palette(screenshot, colors=128)
+        screenshot = reduce_color_palette(screenshot)
         print((codifyBoard(screenshot)))
+        #save image
+        screenshot.save("screenshot.png")
     sys.stdout.flush()  
 
 # Guardar imagen.
