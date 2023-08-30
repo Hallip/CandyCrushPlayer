@@ -1,10 +1,7 @@
 import pyautogui
 import sys
 from PIL import Image, ImageFilter
-
-
-import matplotlib.pyplot as plt
-
+from Agent import Agent
 
 
 def getCandy(color):
@@ -15,9 +12,9 @@ def getCandy(color):
         return "R"
     if (r in range(20,60) and g in range(140,200) and b > 240):
         return "B"
-    if (r > 250 and g in range(220, 250) and b < 30):
+    if (r > 240 and g in range(200, 250) and b < 50):
         return "Y"
-    if (r > 250 and g in range(130, 160) and b < 50):
+    if (r > 240 and g in range(130, 180) and b < 50):
         return "O"    
     if (r in range(180, 210) and g in range(30, 50) and b > 250):
         return "P"  
@@ -64,14 +61,49 @@ def count_unique_elements(matrix):
 
     return len(unique_elements)
 
+def actuador(movimiento):
+    x, y, m =  movimiento
+
+    x_pos = [135, 209, 280, 352, 423, 493, 556, 629, 708]
+    y_pos = [44, 110, 174, 237, 293, 359, 421, 484, 551]
+    
+    pyautogui.moveTo(x_pos[x], y_pos[y], duration=0.1)
+    
+    pyautogui.mouseDown()
+
+    if (m == 'L'):
+        pyautogui.moveTo(x_pos[x-1], y_pos[y], duration=0.2)
+
+    if (m == 'R'):
+        pyautogui.moveTo(x_pos[x+1], y_pos[y], duration=0.2)
+
+    if (m == 'D'):
+        pyautogui.moveTo(x_pos[x], y_pos[y+1], duration=0.2)
+    
+    if (m == 'U'):
+        pyautogui.moveTo(x_pos[x], y_pos[y-1], duration=0.2)
+
+    pyautogui.mouseUp()
+    pyautogui.moveTo(110, 10, duration=0.1)
+
+myAgent = Agent()
+
 while True:
     screenshot = pyautogui.screenshot()
     if ((screenshot.getpixel((30, 40))) == (226, 225, 233)):
         screenshot = screenshot.resize((256, 144))
         screenshot = reduce_color_palette(screenshot)
-        print((codifyBoard(screenshot)))
+        board = (codifyBoard(screenshot))
+        print(board)
         #save image
         screenshot.save("screenshot.png")
+
+        if count_unique_elements(board) == 6:
+            movements = myAgent.calcularMovimientos(board)
+            print (movements)
+            if (movements):
+                actuador(movements[0])
+
     sys.stdout.flush()  
 
 # Guardar imagen.
