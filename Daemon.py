@@ -98,7 +98,7 @@ while True:
         #save image
         screenshot.save("screenshot.png")
 
-        if count_unique_elements(board) == 6:
+        if True:
             movements = myAgent.calcularMovimientos(board)
             print (movements)
             if (movements):
