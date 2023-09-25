@@ -62,26 +62,26 @@ def count_unique_elements(matrix):
     return len(unique_elements)
 
 def actuador(movimiento):
-    x, y, m =  movimiento
+    x, y, m, score, code =  movimiento
 
     x_pos = [135, 209, 280, 352, 423, 493, 556, 629, 708]
     y_pos = [44, 110, 174, 237, 293, 359, 421, 484, 551]
     
-    pyautogui.moveTo(x_pos[x], y_pos[y], duration=0.1)
+    pyautogui.moveTo(x_pos[x], y_pos[y], duration=0.0)
     
     pyautogui.mouseDown()
 
     if (m == 'L'):
-        pyautogui.moveTo(x_pos[x-1], y_pos[y], duration=0.2)
+        pyautogui.moveTo(x_pos[x-1], y_pos[y], duration=0.1)
 
     if (m == 'R'):
-        pyautogui.moveTo(x_pos[x+1], y_pos[y], duration=0.2)
+        pyautogui.moveTo(x_pos[x+1], y_pos[y], duration=0.1)
 
     if (m == 'D'):
-        pyautogui.moveTo(x_pos[x], y_pos[y+1], duration=0.2)
+        pyautogui.moveTo(x_pos[x], y_pos[y+1], duration=0.1)
     
     if (m == 'U'):
-        pyautogui.moveTo(x_pos[x], y_pos[y-1], duration=0.2)
+        pyautogui.moveTo(x_pos[x], y_pos[y-1], duration=0.1)
 
     pyautogui.mouseUp()
     pyautogui.moveTo(110, 10, duration=0.1)
@@ -94,15 +94,14 @@ while True:
         screenshot = screenshot.resize((256, 144))
         screenshot = reduce_color_palette(screenshot)
         board = (codifyBoard(screenshot))
-        print(board)
+        # print(board)
         #save image
         screenshot.save("screenshot.png")
 
         if True:
-            movements = myAgent.calcularMovimientos(board)
-            print (movements)
-            if (movements):
-                actuador(movements[0])
+            movement = myAgent.calcularMovimientos(board)
+            # print (movement)
+            actuador(movement)
 
     sys.stdout.flush()  
 
