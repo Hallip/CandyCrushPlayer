@@ -10,15 +10,15 @@ def getCandy(color):
 
     if (r > 200 and g < 10 and b < 10):
         return "R"
-    if (r in range(20,60) and g in range(140,200) and b > 240):
+    if (r in range(20,100) and g in range(140,220) and b > 230):
         return "B"
-    if (r > 240 and g in range(200, 250) and b < 50):
+    if (r > 240 and g in range(200, 250) and b < 90):
         return "Y"
-    if (r > 240 and g in range(130, 180) and b < 50):
+    if (r > 240 and g in range(130, 180) and b < 90):
         return "O"    
-    if (r in range(180, 210) and g in range(30, 50) and b > 250):
+    if (r in range(180, 240) and g in range(30, 180) and b > 240):
         return "P"  
-    if (r in range(40, 100) and g in range(70, 210) and b < 50):
+    if (r in range(40, 160) and g in range(70, 255) and b < 130):
         return "G"  
     return color
 
@@ -94,13 +94,13 @@ while True:
         screenshot = screenshot.resize((256, 144))
         screenshot = reduce_color_palette(screenshot)
         board = (codifyBoard(screenshot))
-        # print(board)
+        print(board)
         #save image
         screenshot.save("screenshot.png")
 
         if True:
             movement = myAgent.calcularMovimientos(board)
-            # print (movement)
+            print (movement)
             actuador(movement)
 
     sys.stdout.flush()  
