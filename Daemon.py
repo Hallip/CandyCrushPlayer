@@ -66,8 +66,8 @@ def get_colour_name(rgb_triplet):
 
 def codifyBoard(image):
     
-    x_pos = [139, 210, 281, 352, 423, 493, 565, 636, 707]
-    y_pos = [92, 156, 220, 284, 345, 408, 471, 537, 596]
+    x_pos = [139, 208, 281, 352, 423, 493, 564, 635, 707]
+    y_pos = [46, 110, 174, 238, 299, 362, 425, 491, 550]
 
 
     color_matrix = []
@@ -86,8 +86,8 @@ def codifyBoard(image):
 
             for x_add in range (-10,0):
                 for y_add in range (-10,10):
-                pixel_color = image.getpixel((x+x_add, y+y_add))
-                colour_list.append(get_colour_name(pixel_color))
+                    pixel_color = image.getpixel((x+x_add, y+y_add))
+                    colour_list.append(get_colour_name(pixel_color))
         
             colour_list = [elemento for elemento in colour_list if elemento != 'silver']
             colour_list = [elemento for elemento in colour_list if elemento != 'white']
@@ -96,14 +96,25 @@ def codifyBoard(image):
 
             if colour in ['lime','green','olive']:
                 candy = 'G'
-            elif colour == 'orange':
-                candy = 'O'
             elif colour in ['fuchsia','purple']:
                 candy = 'P'
+                
             elif colour in ['navy','aqua','blue']:
                 candy = 'B'
-            elif colour == 'yellow':
-                candy = 'Y'
+            elif colour in ['yellow','orange']:
+                
+                x_add = 0
+                y_add = 0
+                pixel_color = image.getpixel((x+x_add, y+y_add))
+                clr = get_colour_name(pixel_color)
+                # print(row,col)
+                # input(clr)
+                if clr == 'yellow':
+                    candy = 'Y'
+                elif clr == 'orange':
+                    candy = 'O'
+                else:
+                    candy = "U"
             elif colour in ['red']:
                 candy = 'R'
             elif colour in ['maroon']:
@@ -112,6 +123,7 @@ def codifyBoard(image):
                 candy = colour
             # if 'white' in colour_list:
             #     candy = candy.lowercase()
+            
             color_row.append(candy)
         color_matrix.append(color_row)
         
@@ -131,25 +143,25 @@ def actuador(movimiento):
     x, y, m, score, code =  movimiento
 
     x_pos = [139, 210, 281, 352, 423, 493, 565, 636, 707]
-    y_pos = [92, 156, 220, 284, 345, 408, 471, 537, 596]
+    y_pos = [46, 110, 174, 238, 299, 362, 425, 491, 550]
     
-    pyautogui.moveTo(x_pos[x], y_pos[y], duration=0.0)
+    pyautogui.click(x_pos[x], y_pos[y])
     
-    pyautogui.mouseDown()
+    # pyautogui.mouseDown()
 
     if (m == 'L'):
-        pyautogui.moveTo(x_pos[x-1], y_pos[y], duration=0.05)
+        pyautogui.click(x_pos[x-1], y_pos[y])
 
     if (m == 'R'):
-        pyautogui.moveTo(x_pos[x+1], y_pos[y], duration=0.05)
+        pyautogui.click(x_pos[x+1], y_pos[y])
 
     if (m == 'D'):
-        pyautogui.moveTo(x_pos[x], y_pos[y+1], duration=0.05)
+        pyautogui.click(x_pos[x], y_pos[y+1])
     
     if (m == 'U'):
-        pyautogui.moveTo(x_pos[x], y_pos[y-1], duration=0.05)
+        pyautogui.click(x_pos[x], y_pos[y-1])
 
-    pyautogui.mouseUp()
+    # pyautogui.mouseUp()
     # pyautogui.moveTo(110, 10, duration=0.1)
 
 
@@ -165,7 +177,7 @@ while True:
     screenshot = pyautogui.screenshot()
     # screenshot = screenshot.resize((256, 144))
     # screenshot.save("screenshot.png")
-    if ((screenshot.getpixel((30, 80))) == (226, 225, 233)):
+    if ((screenshot.getpixel((30, 34))) == (226, 225, 233)):
         # screenshot = screenshot.resize((256, 144))
         # screenshot = reduce_color_palette(screenshot)
         board = (codifyBoard(screenshot))
