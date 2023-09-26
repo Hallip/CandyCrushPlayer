@@ -65,53 +65,43 @@ def codifyBoard(image):
             x = x_pos[col]
             y = y_pos[row]
 
+            colour_list = []
+
             if row == 0 and col == 3:
                 x = 344
                 y = 92
-                colour_list = []
 
-                pixel_color = image.getpixel((x, y))
-                colour_list.append(get_colour_name(pixel_color))
-
-                pixel_color = image.getpixel((x-5, y))
-                colour_list.append(get_colour_name(pixel_color))
-
-                pixel_color = image.getpixel((x, y+5))
-                colour_list.append(get_colour_name(pixel_color))
-
-                pixel_color = image.getpixel((x, y-5))
-                colour_list.append(get_colour_name(pixel_color))
-
-                colour_list = [elemento for elemento in colour_list if elemento != 'silver']
-                colour_list = [elemento for elemento in colour_list if elemento != 'white']
-
-                colour = elemento_mas_repetido(colour_list)
             else: 
-
-                colour_list = []
-
-                pixel_color = image.getpixel((x, y))
-                colour_list.append(get_colour_name(pixel_color))
 
                 pixel_color = image.getpixel((x+5, y))
                 colour_list.append(get_colour_name(pixel_color))
-
-                pixel_color = image.getpixel((x-5, y))
+                pixel_color = image.getpixel((x+5, y-5))
+                colour_list.append(get_colour_name(pixel_color))
+                pixel_color = image.getpixel((x+5, y+5))
                 colour_list.append(get_colour_name(pixel_color))
 
-                pixel_color = image.getpixel((x, y+5))
-                colour_list.append(get_colour_name(pixel_color))
-
-                pixel_color = image.getpixel((x, y-5))
-                colour_list.append(get_colour_name(pixel_color))
-
-                colour_list = [elemento for elemento in colour_list if elemento != 'silver']
-                colour_list = [elemento for elemento in colour_list if elemento != 'white']
-
-                colour = elemento_mas_repetido(colour_list)
-
+            pixel_color = image.getpixel((x, y))
+            colour_list.append(get_colour_name(pixel_color))
             
+            pixel_color = image.getpixel((x-5, y))
+            colour_list.append(get_colour_name(pixel_color))
 
+            pixel_color = image.getpixel((x, y+5))
+            colour_list.append(get_colour_name(pixel_color))
+
+            pixel_color = image.getpixel((x, y-5))
+            colour_list.append(get_colour_name(pixel_color))
+
+            pixel_color = image.getpixel((x-5, y-5))
+            colour_list.append(get_colour_name(pixel_color))
+            
+            pixel_color = image.getpixel((x-5, y+5))
+            colour_list.append(get_colour_name(pixel_color))
+
+            colour_list = [elemento for elemento in colour_list if elemento != 'silver']
+            colour_list = [elemento for elemento in colour_list if elemento != 'white']
+
+            colour = elemento_mas_repetido(colour_list)
 
             if colour in ['lime','green','olive']:
                 candy = 'G'
@@ -123,10 +113,14 @@ def codifyBoard(image):
                 candy = 'B'
             elif colour == 'yellow':
                 candy = 'Y'
-            elif colour in ['maroon','red']:
+            elif colour in ['red']:
                 candy = 'R'
+            elif colour in ['maroon']:
+                candy = 'C'
             else:
                 candy = colour
+            # if 'white' in colour_list:
+            #     candy = candy.lowercase()
             color_row.append(candy)
         color_matrix.append(color_row)
         
@@ -152,19 +146,20 @@ def actuador(movimiento):
     pyautogui.mouseDown()
 
     if (m == 'L'):
-        pyautogui.moveTo(x_pos[x-1], y_pos[y], duration=0.1)
+        pyautogui.moveTo(x_pos[x-1], y_pos[y], duration=0.05)
 
     if (m == 'R'):
-        pyautogui.moveTo(x_pos[x+1], y_pos[y], duration=0.1)
+        pyautogui.moveTo(x_pos[x+1], y_pos[y], duration=0.05)
 
     if (m == 'D'):
-        pyautogui.moveTo(x_pos[x], y_pos[y+1], duration=0.1)
+        pyautogui.moveTo(x_pos[x], y_pos[y+1], duration=0.05)
     
     if (m == 'U'):
-        pyautogui.moveTo(x_pos[x], y_pos[y-1], duration=0.1)
+        pyautogui.moveTo(x_pos[x], y_pos[y-1], duration=0.05)
 
     pyautogui.mouseUp()
-    pyautogui.moveTo(110, 10, duration=0.1)
+    # pyautogui.moveTo(110, 10, duration=0.1)
+
 
 myAgent = Agent()
 

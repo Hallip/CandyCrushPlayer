@@ -61,6 +61,9 @@ class Agent:
         jugadas = []
         for row in range(9):
             for col in range(9):
+
+                #Chocolate
+                # if({})
                 #   x . x x  
                 if (col <= 5):
                     if (tablero[row][col] == tablero[row][col+2] and tablero[row][col] == tablero[row][col+3]):
