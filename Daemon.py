@@ -3,7 +3,6 @@ import sys
 from PIL import Image, ImageFilter
 from Agent import Agent
 import keyboard
-import webcolors
 import time
 from collections import Counter
 
@@ -35,8 +34,23 @@ def elemento_mas_repetido(arreglo):
 
 def get_colour_name(rgb_triplet):
     min_colours = {}
-    for key, name in webcolors.CSS21_HEX_TO_NAMES.items():
-        r_c, g_c, b_c = webcolors.hex_to_rgb(key)
+    colors =[
+            ((255, 165, 0), 'orange'), 
+            ((0, 255, 255), 'aqua'), 
+            ((0, 0, 0), 'black'), 
+            ((0, 0, 255), 'blue'), 
+            ((255, 0, 255), 'fuchsia'), 
+            ((0, 128, 0), 'green'), 
+            ((128, 128, 128), 'gray'), 
+            ((0, 255, 0), 'lime'), 
+            ((128, 0, 0), 'maroon'), 
+            ((128, 0, 128), 'purple'), 
+            ((255, 0, 0), 'red'), 
+            ((255, 255, 255), 'white'), 
+            ((255, 255, 0), 'yellow')
+        ]
+    for key, name in colors:
+        r_c, g_c, b_c = key
         rd = (r_c - rgb_triplet[0]) ** 2
         gd = (g_c - rgb_triplet[1]) ** 2
         bd = (b_c - rgb_triplet[2]) ** 2
@@ -51,8 +65,7 @@ def get_colour_name(rgb_triplet):
 #     return converted_image
 
 def codifyBoard(image):
-
-
+    
     x_pos = [139, 210, 281, 352, 423, 493, 565, 636, 707]
     y_pos = [92, 156, 220, 284, 345, 408, 471, 537, 596]
 
@@ -71,33 +84,11 @@ def codifyBoard(image):
                 x = 344
                 y = 92
 
-            else: 
-
-                pixel_color = image.getpixel((x+5, y))
+            for x_add in range (-10,0):
+                for y_add in range (-10,10):
+                pixel_color = image.getpixel((x+x_add, y+y_add))
                 colour_list.append(get_colour_name(pixel_color))
-                pixel_color = image.getpixel((x+5, y-5))
-                colour_list.append(get_colour_name(pixel_color))
-                pixel_color = image.getpixel((x+5, y+5))
-                colour_list.append(get_colour_name(pixel_color))
-
-            pixel_color = image.getpixel((x, y))
-            colour_list.append(get_colour_name(pixel_color))
-            
-            pixel_color = image.getpixel((x-5, y))
-            colour_list.append(get_colour_name(pixel_color))
-
-            pixel_color = image.getpixel((x, y+5))
-            colour_list.append(get_colour_name(pixel_color))
-
-            pixel_color = image.getpixel((x, y-5))
-            colour_list.append(get_colour_name(pixel_color))
-
-            pixel_color = image.getpixel((x-5, y-5))
-            colour_list.append(get_colour_name(pixel_color))
-            
-            pixel_color = image.getpixel((x-5, y+5))
-            colour_list.append(get_colour_name(pixel_color))
-
+        
             colour_list = [elemento for elemento in colour_list if elemento != 'silver']
             colour_list = [elemento for elemento in colour_list if elemento != 'white']
 
@@ -125,6 +116,7 @@ def codifyBoard(image):
         color_matrix.append(color_row)
         
     return color_matrix
+
 
 # def count_unique_elements(matrix):
 #     unique_elements = set()
