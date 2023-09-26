@@ -31,23 +31,27 @@ class Agent:
             if consecutive_y >= 3:
                         score = score + consecutive_y * 20
             if consecutive_x >= 3:
-                        score = score + consecutive_x * 20            
+                        score = score + consecutive_x * 21            
             consecutive_x = 0
             consecutive_y = 0
             
             for col in range(9):
                 if tablero[row][col] == current_x:
                     consecutive_x += 1
-                else: 
-                    if consecutive_x >= 3:
-                        score = score + consecutive_x * 20
+                else:
+                    if consecutive_x >= 4:
+                        score = score + consecutive_x * 36
+                    elif consecutive_x >= 3:
+                        score = score + consecutive_x * 21
                     current_x = tablero[row][col]
                     consecutive_x = 1
                 
                 if tablero[col][row] == current_y:
                     consecutive_y += 1
                 else: 
-                    if consecutive_y >= 3:
+                    if consecutive_y >= 4:
+                        score = score + consecutive_y * 35
+                    elif consecutive_y >= 3:
                         score = score + consecutive_y * 20
                     current_y = tablero[col][row]
                     consecutive_y = 1
