@@ -36,13 +36,10 @@ class Agent:
             consecutive_y = 0
             
             for col in range(9):
-
                 if tablero[row][col] == current_x:
                     consecutive_x += 1
-                else:
-                    if consecutive_x >= 4:
-                        score = score + consecutive_x * 35
-                    elif consecutive_x >= 3:
+                else: 
+                    if consecutive_x >= 3:
                         score = score + consecutive_x * 20
                     current_x = tablero[row][col]
                     consecutive_x = 1
@@ -50,9 +47,7 @@ class Agent:
                 if tablero[col][row] == current_y:
                     consecutive_y += 1
                 else: 
-                    if consecutive_y >= 4:
-                        score = score + consecutive_y * 35
-                    elif consecutive_y >= 3:
+                    if consecutive_y >= 3:
                         score = score + consecutive_y * 20
                     current_y = tablero[col][row]
                     consecutive_y = 1
@@ -62,9 +57,6 @@ class Agent:
         jugadas = []
         for row in range(9):
             for col in range(9):
-
-                #Chocolate
-                # if({})
                 #   x . x x  
                 if (col <= 5):
                     if (tablero[row][col] == tablero[row][col+2] and tablero[row][col] == tablero[row][col+3]):
@@ -196,13 +188,22 @@ class Agent:
 # Test Agnet #
 ##############
 
-myAgent = Agent()
+# myAgent = Agent()
 
-board = [['G', 'R', 'O', 'G', 'R', 'P', 'R', 'B', 'Y'], ['O', 'P', 'G', 'P', 'Y', 'O', 'P', 'Y', 'O'], ['Y', 'O', 'P', 'G', 'G', 'B', 'Y', 'O', 'R'], ['O', 'Y', 'G', 'O', 'R', 'O', 'P', 'O', 'Y'], ['B', 'P', 'P', 'B', 'Y', 'G', 'Y', 'R', 'Y'], ['P', 'R', 'O', 'R', 'G', 'R', 'B', 'B', 'G'], ['O', 'B', 'B', 'R', 'B', 'O', 'G', 'R', 'G'], ['B', 'R', 'O', 'B', 'P', 'B', 'B', 'P', 'O'], ['U', 'B', 'Y', 'G', 'R', 'Y', 'B', 'R', 'R']]
+# board = [
+#     ['O', 'B', 'O', (88, 110, 124), 'B', 'R', 'P', 'O', 'Y'], 
+#     ['B', 'G', 'B', 'O', 'R', 'Y', 'G', 'G', 'R'], 
+#     ['O', 'Y', 'R', 'R', 'G', 'P', 'B', 'G', 'P'], 
+#     ['O', 'O', 'R', 'B', 'O', 'P', 'Y', 'O', 'R'], 
+#     ['Y', 'B', 'G', 'P', 'G', 'O', 'P', 'P', 'O'], 
+#     ['O', 'G', 'R', 'P', 'P', 'G', 'Y', 'Y', 'B'], 
+#     ['R', 'B', 'Y', 'R', 'G', 'P', 'B', 'O', 'R'], 
+#     ['Y', 'O', 'O', 'R', 'Y', 'O', 'B', 'Y', 'P'], 
+#     ['P', 'O', 'P', 'R', 'G', 'Y', 'P', 'G', 'R']]
 
 
-print (myAgent.calcularMovimientos(board))
+# print (myAgent.calcularMovimientos(board))
 
-# board = myAgent.simularJugada(board, (4, 8, 'L'))
+# # board = myAgent.simularJugada(board, (4, 8, 'L'))
 # print("---------------------")
 # print(myAgent.calcularPuntaje(board))
